@@ -1,5 +1,7 @@
 name: pixelart
 description: "A pixel art viewer and editor."
+repository: https://github.com/BaraShiro/PixelArtApp
+
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -10,13 +12,21 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  bloc: ^8.1.2
+  flutter_bloc: ^8.1.3
   cupertino_icons: ^1.0.2
+  equatable: ^2.0.5
+  fpdart: ^1.1.0
+  material_symbols_icons: ^4.2709.0
 
 dev_dependencies:
+  bloc_test: ^9.1.5
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  integration_test:
+    sdk: flutter
+  mocktail: ^1.0.1
+  flutter_lints: ^3.0.1
 
 flutter:
-
   uses-material-design: true
