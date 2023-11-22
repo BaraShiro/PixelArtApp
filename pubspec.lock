@@ -370,7 +370,7 @@ packages:
     source: path
     version: "1.0.0"
   pixelart_shared:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "packages/pixelart_shared"
       relative: true

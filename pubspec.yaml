@@ -12,6 +12,8 @@ environment:
 dependencies:
   pixelart_client:
     path: packages/pixelart_client
+  pixelart_shared:
+    path: packages/pixelart_shared
   flutter:
     sdk: flutter
   bloc: ^8.1.2
