@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pixelart/app.dart';
 
-void main() {
-  runApp(const MyApp());
+/// The app entry point, sets up the repositories and starts the app.
+void main() async {
+  // TODO: Setup server here?
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-}
