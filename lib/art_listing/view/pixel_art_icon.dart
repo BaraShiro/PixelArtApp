@@ -3,6 +3,8 @@ import 'package:pixelart/art_listing/art_listing.dart';
 import 'package:pixelart_shared/pixelart_shared.dart';
 import 'dart:ui' as ui;
 
+/// Builds the widget as soon as [pixelArtToImage] has finished rendering.
+/// Displays a [CircularProgressIndicator] meanwhile.
 class PixelArtIcon extends StatelessWidget {
   final PixelArt pixelArt;
 
@@ -15,23 +17,22 @@ class PixelArtIcon extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return CustomPaint(
-              // Passing our image
               painter: _ImagePainter(image: snapshot.data!),
-              child: Container(
+              child: SizedBox(
                 width: pixelArt.width.toDouble(),
                 height: pixelArt.height.toDouble(),
               ),
             );
           }
-          return Text("Error!");
+          return const CircularProgressIndicator();
         }
     );
   }
 
 }
 
-/// Paints given [ui.Image] on [ui.Canvas]
-/// does not repaint
+/// Paints given [ui.Image] on [ui.Canvas].
+/// Does not repaint.
 class _ImagePainter extends CustomPainter {
   ui.Image image;
 
