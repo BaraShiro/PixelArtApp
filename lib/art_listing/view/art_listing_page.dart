@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:pixelart/art_listing/art_listing.dart';
+import 'package:pixelart/loading/loading.dart';
 import 'package:pixelart_client/pixelart_client.dart';
 import 'package:pixelart_shared/pixelart_shared.dart';
 
@@ -36,31 +37,36 @@ class ArtListingPage extends StatelessWidget {
       ),
       body: Center(
         child: BlocProvider(
-          create: (_) => ArtListingBloc(),
+          create: (_) => ArtListingBloc(repository: RepositoryProvider.of(context))..add(ListAllArtEvent()),
           child: BlocBuilder<ArtListingBloc, ArtListingState>(
             buildWhen: (previous, current) => previous != current,
             builder: (context, ArtListingState state) {
               switch (state) {
-
                 case ArtListingInitial():
-                  return ArtListingView(
-                    pixelArtList: [
-                      PixelArt(
-                          id: "id",
-                          name: "name",
-                          description: "description",
-                          width: 4,
-                          height: 4,
-                          editors: [],
-                          pixelMatrix: [
-                            [_bluePixel, _bluePixel, _bluePixel, _bluePixel],
-                            [_redPixel, _redPixel, _redPixel, _redPixel],
-                            [_bluePixel, _bluePixel, _bluePixel, _bluePixel],
-                            [_redPixel, _redPixel, _redPixel, _redPixel],
-                          ]
-                      )
-                    ],
-                  );
+                  return Text("init");//ArtListingView(
+                  //   pixelArtList: [
+                  //     PixelArt(
+                  //         id: "id",
+                  //         name: "name",
+                  //         description: "description",
+                  //         width: 4,
+                  //         height: 4,
+                  //         editors: [],
+                  //         pixelMatrix: [
+                  //           [_bluePixel, _bluePixel, _bluePixel, _bluePixel],
+                  //           [_redPixel, _redPixel, _redPixel, _redPixel],
+                  //           [_bluePixel, _bluePixel, _bluePixel, _bluePixel],
+                  //           [_redPixel, _redPixel, _redPixel, _redPixel],
+                  //         ]
+                  //     )
+                  //   ],
+                  // );
+                case ListAllArtInProgress():
+                  return const LoadingPage();
+                case ListAllArtSuccess():
+                  return ArtListingView(pixelArtList: state.artList);
+                case ListAllArtFailure():
+                  return Text("Error: ${state.error}");
               }
             },
           ),
