@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:pixelart/art_listing/art_listing.dart';
 import 'package:pixelart/loading/loading.dart';
-import 'package:pixelart_client/pixelart_client.dart';
 import 'package:pixelart_shared/pixelart_shared.dart';
 
 class ArtListingPage extends StatelessWidget {
@@ -13,60 +12,43 @@ class ArtListingPage extends StatelessWidget {
     return MaterialPageRoute<void>(builder: (_) => const ArtListingPage());
   }
 
-  final _redPixel = const Pixel(
-    red: 255,
-    green: 0,
-    blue: 0,
-    alpha: 255,
-    placedBy: Participant(id: '1', name: 'John Doe'),
-  );
 
-  final _bluePixel = const Pixel(
-    red: 0,
-    green: 0,
-    blue: 255,
-    alpha: 255,
-    placedBy: Participant(id: '2', name: 'Jane Smith'),
-  );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Pixel Art"),
+        // actions: <Widget>[
+        //   TextButton.icon(
+        //     onPressed: () => context.read<ArtListingBloc>().add(AddArtEvent(newArt: ArtGen.mario)),
+        //     icon: const Icon(Symbols.add),
+        //     label: const Text("Add"),
+        //     style: TextButton.styleFrom(
+        //         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        //         foregroundColor:
+        //         Theme.of(context).colorScheme.onPrimaryContainer),
+        //   ),
+        // ],
       ),
       body: Center(
         child: BlocProvider(
-          create: (_) => ArtListingBloc(repository: RepositoryProvider.of(context))..add(ListAllArtEvent()),
+          create: (_) => ArtListingBloc(
+              repository: RepositoryProvider.of(context)
+          )..add(const ListAllArtEvent(user: anon),
+            ),
           child: BlocBuilder<ArtListingBloc, ArtListingState>(
             buildWhen: (previous, current) => previous != current,
             builder: (context, ArtListingState state) {
               switch (state) {
                 case ArtListingInitial():
-                  return Text("init");//ArtListingView(
-                  //   pixelArtList: [
-                  //     PixelArt(
-                  //         id: "id",
-                  //         name: "name",
-                  //         description: "description",
-                  //         width: 4,
-                  //         height: 4,
-                  //         editors: [],
-                  //         pixelMatrix: [
-                  //           [_bluePixel, _bluePixel, _bluePixel, _bluePixel],
-                  //           [_redPixel, _redPixel, _redPixel, _redPixel],
-                  //           [_bluePixel, _bluePixel, _bluePixel, _bluePixel],
-                  //           [_redPixel, _redPixel, _redPixel, _redPixel],
-                  //         ]
-                  //     )
-                  //   ],
-                  // );
-                case ListAllArtInProgress():
                   return const LoadingPage();
-                case ListAllArtSuccess():
-                  return ArtListingView(pixelArtList: state.artList);
-                case ListAllArtFailure():
-                  return Text("Error: ${state.error}");
+                case ArtListingInProgress():
+                  return const LoadingPage();
+                case ArtListingSuccess():
+                  return ArtListingView(pixelArtList: state.artList, user: state.user);
+                case ArtListingFailure():
+                  return Text("Error: ${state.error}"); // TODO: Add reload button so user is preserved
               }
             },
           ),

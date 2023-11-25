@@ -14,7 +14,6 @@ class ArtListingCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      // color: Theme.of(context).colorScheme.surfaceVariant,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
@@ -22,31 +21,19 @@ class ArtListingCardWidget extends StatelessWidget {
         isThreeLine: true,
         titleAlignment: ListTileTitleAlignment.center,
         leading: SizedBox(
-          // width: 42,
           height: double.maxFinite,
           child: FittedBox(
-              child: PixelArtIcon(pixelArt: pixelArt)
+              child: PixelArtIcon(pixelArt: pixelArt),
           ),
-        ),//Icon(
-        //   Symbols.art_track,
-        //   // color: Theme.of(context).colorScheme.onSurfaceVariant,
-        //   size: 48,
-        // ),
+        ),
         title: Text(pixelArt.name),
         subtitle: Text(pixelArt.description),
         trailing: TextButton.icon(
-          // color: Colors.green,//Theme.of(context).colorScheme.primary,
-          // hoverColor: Colors.greenAccent,//Theme.of(context).colorScheme.inversePrimary,
-          // style: ButtonStyle(
-          //
-          // ),
-          onPressed: () => {}, //context
-              // .read<DashboardBloc>()
-              // .add(DeleteSessionEvent(uuid: workout.uuid)),
-          label: Text("Edit"),
-          icon: Icon(
-            Symbols.palette,
-          ),
+          onPressed: () => {},//context
+              // .read<ArtListingBloc>()
+              // .add(DeleteArtEvent(id: pixelArt.id)),
+          label: const Text("Edit"),
+          icon: const Icon(Symbols.palette),
         ),
       ),
     );
