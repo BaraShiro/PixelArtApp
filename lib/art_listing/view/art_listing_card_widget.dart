@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:pixelart/art_edit/art_edit.dart';
 import 'package:pixelart/art_listing/art_listing.dart';
-import 'package:pixelart_client/pixelart_client.dart';
 import 'package:pixelart_shared/pixelart_shared.dart';
-import 'dart:ui' as ui;
 
 class ArtListingCardWidget extends StatelessWidget {
   final PixelArt pixelArt;
@@ -29,9 +27,7 @@ class ArtListingCardWidget extends StatelessWidget {
         title: Text(pixelArt.name),
         subtitle: Text(pixelArt.description),
         trailing: TextButton.icon(
-          onPressed: () => {},//context
-              // .read<ArtListingBloc>()
-              // .add(DeleteArtEvent(id: pixelArt.id)),
+          onPressed: () => Navigator.push(context, ArtEditPage.route(artId: pixelArt.id, user: anon)), // TODO: Supply current user
           label: const Text("Edit"),
           icon: const Icon(Symbols.palette),
         ),

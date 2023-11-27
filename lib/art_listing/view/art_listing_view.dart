@@ -33,10 +33,7 @@ class ArtListingView extends StatelessWidget {
                 shrinkWrap: true,
                   padding: const EdgeInsets.only(bottom: 200, top: 10),
                   itemCount: pixelArtList.length,
-                  itemBuilder: (
-                      BuildContext context,
-                      int index,
-                      ) {
+                  itemBuilder: (BuildContext context, int index) {
                     return ArtListingCardWidget(pixelArt: pixelArtList[index]);
                   }),
             },
