@@ -23,6 +23,7 @@ dependencies:
   fpdart: ^1.1.0
   material_symbols_icons: ^4.2709.0
   uuid: ^4.0.0
+  patterns_canvas: ^0.4.0
 
 dev_dependencies:
   bloc_test: ^9.1.5
