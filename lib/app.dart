@@ -13,7 +13,7 @@ class App extends StatelessWidget {
       create: (BuildContext context) => const HTTPPixelArtRepository(url: "localhost:8080/pixelart"),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Workout',
+        title: 'Pixel art edit',
         theme: ThemeData(
           useMaterial3: true,
           colorSchemeSeed: Colors.blue,
@@ -22,5 +22,4 @@ class App extends StatelessWidget {
       ),
     );
   }
-
 }
