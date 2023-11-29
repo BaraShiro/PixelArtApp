@@ -34,7 +34,7 @@ class ArtListingView extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 200, top: 10),
                   itemCount: pixelArtList.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return ArtListingCardWidget(pixelArt: pixelArtList[index]);
+                    return ArtListingCardWidget(pixelArt: pixelArtList[index], user:user);
                   }),
             },
           ],
@@ -49,7 +49,6 @@ class ArtListingView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Spacer(),
-        Text("${user.name} ${user.id}"),
         changeNameForm(context),
         const Spacer(),
         SizedBox(

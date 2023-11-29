@@ -18,17 +18,6 @@ class ArtEditPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Pixel Art Editor"),
-        // actions: <Widget>[
-        //   TextButton.icon(
-        //     onPressed: () => context.read<ArtListingBloc>().add(AddArtEvent(newArt: ArtGen.mario)),
-        //     icon: const Icon(Symbols.add),
-        //     label: const Text("Add"),
-        //     style: TextButton.styleFrom(
-        //         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        //         foregroundColor:
-        //         Theme.of(context).colorScheme.onPrimaryContainer),
-        //   ),
-        // ],
       ),
       body: Center(
         child: BlocProvider(

@@ -1,6 +1,8 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pixelart/art_edit/art_edit.dart';
 import 'package:pixelart_shared/pixelart_shared.dart';
-import 'package:patterns_canvas/patterns_canvas.dart';
 
 class ArtEditView extends StatelessWidget {
   final PixelArt art;
@@ -28,8 +30,8 @@ class ArtEditView extends StatelessWidget {
                 border: Border.all(color: Colors.black),
               ),
               child: Container(
-                decoration: CheckeredBackground(),
-                child: pixelArtMatrix(art.pixelMatrix)),
+                decoration: CheckeredBackground(), // Background visible through transparent pixels
+                child: pixelArtMatrix(context, art.pixelMatrix)),
             ),
             Column(
               children: art.editors.map((e) => Text(e.name)).toList(),
@@ -63,44 +65,54 @@ class ArtEditView extends StatelessWidget {
     );
   }
 
-  Widget pixelArtMatrix(List<List<Pixel>> matrix) {
+  Widget pixelArtMatrix(BuildContext context, List<List<Pixel>> matrix) {
     return Column(
-      children: matrix.map((row) => pixelArtMatrixRow(row)).toList(),
+      children: matrix.mapIndexed((y, row) => pixelArtMatrixRow(context, y, row)).toList(),
     );
   }
 
-  Widget pixelArtMatrixRow(List<Pixel> row){
+  Widget pixelArtMatrixRow(BuildContext context, int y, List<Pixel> row){
     return Row(
-      children: row.map((pixel) => pixelArtMatrixCell(pixel)).toList(),
+      children: row.mapIndexed((x, pixel) => pixelArtMatrixCell(context, x, y, pixel)).toList(),
     );
   }
 
-  Widget pixelArtMatrixCell(Pixel pixel) {
-    return Container(
-      width: 16,
-      height: 16,
-      color: Color.fromARGB(
-          pixel.alpha,
-          pixel.red,
-          pixel.green,
-          pixel.blue),
+  Widget pixelArtMatrixCell(BuildContext context, int x, int y, Pixel pixel) {
+    return GestureDetector(
+      onSecondaryTap: () {
+        Color color = Colors.white; // TODO: Get color from state somehow
+        print("x: $x y: $y ${pixel.toColor()} $color");
+        paintPixel(context, x, y, pixel, color);
+      },
+      onTap: () {
+        Color color = Colors.black;
+        print("x: $x y: $y ${pixel.toColor()} $color");
+        paintPixel(context, x, y, pixel, color);
+      },
+      child: Container(
+        width: 16,
+        height: 16,
+        color: pixel.toColor(),
+      ),
     );
   }
-}
 
-class CheckeredBackground extends Decoration {
-  @override
-  BoxPainter createBoxPainter([VoidCallback? onChanged]) {
-    return _CheckeredPainter();
-  }
-}
+  void paintPixel(BuildContext context, int x, int y, Pixel pixel, Color color) {
+    if(pixel.toColor() == color) {
+      print("Same same!");
+      return;
+    }
 
-class _CheckeredPainter extends BoxPainter {
-  @override
-  void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-    final Rect bounds = offset & configuration.size!;
-    const Pattern pattern = Checkers(bgColor: Colors.black12, fgColor: Colors.white, featuresCount: 32);
+    Pixel newPixel = color.toPixel(user);
+    PixelArt newArt = art.placePixel(x, y, newPixel);
 
-    pattern.paintOnRect(canvas, configuration.size!, bounds);
+    if(!newArt.editors.contains(user)) {
+      print("New editor!");
+      List<Participant> newEditors = List.of(newArt.editors);
+      newEditors.add(user);
+      newArt = newArt.copyWith(editors: newEditors);
+    }
+
+    BlocProvider.of<ArtEditBloc>(context).add(ArtEditUpdateEvent(updatedPixelArt: newArt));
   }
 }
