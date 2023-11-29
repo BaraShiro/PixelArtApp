@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pixelart/palette/palette.dart';
 
 class PaletteView extends StatelessWidget {
   final Color primaryColor;
@@ -12,6 +14,7 @@ class PaletteView extends StatelessWidget {
       children: [
         Row(
           children: [
+            // Primary color
             Container(
               width: 32,
               height: 32,
@@ -20,6 +23,8 @@ class PaletteView extends StatelessWidget {
                 border: Border.all(color: Colors.black),
               ),
             ),
+
+            // Secondary color
             Container(
               width: 32,
               height: 32,
@@ -31,24 +36,50 @@ class PaletteView extends StatelessWidget {
           ],
         ),
         const SizedBox(width: 16, height: 16),
-        Text("Palette"),
+        const Text("NES palette"),
         Row(
           children: [
-            Container(width: 16, height: 16, color: Color.fromARGB(255, 0, 64, 78),),
-            Container(width: 16, height: 16, color: Color.fromARGB(255, 0, 124, 142),),
-            Container(width: 16, height: 16, color: Color.fromARGB(255, 72, 206, 223),),
-            Container(width: 16, height: 16, color: Color.fromARGB(255, 181, 236, 243),),
+            paletteButton(context, Color.fromARGB(255, 0, 64, 78)),
+            paletteButton(context, Color.fromARGB(255, 0, 124, 142)),
+            paletteButton(context, Color.fromARGB(255, 72, 206, 223)),
+            paletteButton(context, Color.fromARGB(255, 181, 236, 243)),
           ],
         ),
         Row(
           children: [
-            Container(width: 16, height: 16, color: Color.fromARGB(255, 0, 79, 8),),
-            Container(width: 16, height: 16, color: Color.fromARGB(255, 0, 144, 50),),
-            Container(width: 16, height: 16, color: Color.fromARGB(255, 69, 225, 130),),
-            Container(width: 16, height: 16, color: Color.fromARGB(255, 180, 243, 205),),
+            paletteButton(context, Color.fromARGB(255, 0, 79, 8)),
+            paletteButton(context, Color.fromARGB(255, 0, 144, 50)),
+            paletteButton(context, Color.fromARGB(255, 69, 225, 130)),
+            paletteButton(context, Color.fromARGB(255, 180, 243, 205)),
           ],
         )
       ],
+    );
+  }
+
+  Widget paletteButton(BuildContext context, Color color) {
+    return GestureDetector(
+      onTap: () {
+        BlocProvider.of<PaletteBloc>(context)
+            .add(UpdateColorsPaletteEvent(
+              primaryColor: color,
+              secondaryColor: secondaryColor
+          )
+        );
+      },
+      onSecondaryTap: () {
+        BlocProvider.of<PaletteBloc>(context)
+            .add(UpdateColorsPaletteEvent(
+            primaryColor: primaryColor,
+            secondaryColor: color
+        )
+        );
+      },
+      child: Container(
+        width: 16,
+        height: 16,
+        color: color,
+      ),
     );
   }
 

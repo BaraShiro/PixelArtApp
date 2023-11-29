@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pixelart/art_edit/art_edit.dart';
 import 'package:pixelart_shared/pixelart_shared.dart';
+import 'package:pixelart/palette/palette.dart';
 
 class ArtEditView extends StatelessWidget {
   final PixelArt art;
@@ -12,55 +13,24 @@ class ArtEditView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      // shrinkWrap: true,
-      padding: EdgeInsets.only(left: 32, top: 32, right: 32, bottom: 200),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                Text("Palette"),
-                palette(),
-              ],
-            ),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-              ),
-              child: Container(
-                decoration: CheckeredBackground(), // Background visible through transparent pixels
-                child: pixelArtMatrix(context, art.pixelMatrix)),
-            ),
-            Column(
-              children: art.editors.map((e) => Text(e.name)).toList(),
-            ),
-          ],
+        Container(
+          // constraints: BoxConstraints(maxWidth: 600),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+          ),
+          child: Container(
+            decoration: CheckeredBackground(), // Background visible through transparent pixels
+            child: pixelArtMatrix(context, art.pixelMatrix)),
         ),
-      ],
-    );
-  }
-
-  Widget palette() {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Container(width: 16, height: 16, color: Color.fromARGB(255, 0, 64, 78),),
-            Container(width: 16, height: 16, color: Color.fromARGB(255, 0, 124, 142),),
-            Container(width: 16, height: 16, color: Color.fromARGB(255, 72, 206, 223),),
-            Container(width: 16, height: 16, color: Color.fromARGB(255, 181, 236, 243),),
-          ],
+        const SizedBox(width: 32, height: 32),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [const Text("Editors:")] + art.editors.map((e) => Text(e.name)).toList(),
         ),
-        Row(
-          children: [
-            Container(width: 16, height: 16, color: Color.fromARGB(255, 0, 79, 8),),
-            Container(width: 16, height: 16, color: Color.fromARGB(255, 0, 144, 50),),
-            Container(width: 16, height: 16, color: Color.fromARGB(255, 69, 225, 130),),
-            Container(width: 16, height: 16, color: Color.fromARGB(255, 180, 243, 205),),
-          ],
-        )
       ],
     );
   }
@@ -79,13 +49,13 @@ class ArtEditView extends StatelessWidget {
 
   Widget pixelArtMatrixCell(BuildContext context, int x, int y, Pixel pixel) {
     return GestureDetector(
-      onSecondaryTap: () {
-        Color color = Colors.white; // TODO: Get color from state somehow
+      onTap: () {
+        Color color = BlocProvider.of<PaletteBloc>(context).state.primaryColor;
         print("x: $x y: $y ${pixel.toColor()} $color");
         paintPixel(context, x, y, pixel, color);
       },
-      onTap: () {
-        Color color = Colors.black;
+      onSecondaryTap: () {
+        Color color = BlocProvider.of<PaletteBloc>(context).state.secondaryColor;
         print("x: $x y: $y ${pixel.toColor()} $color");
         paintPixel(context, x, y, pixel, color);
       },
