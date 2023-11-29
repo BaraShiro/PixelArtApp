@@ -8,7 +8,7 @@ part 'palette_state.dart';
 class PaletteBloc extends Bloc<PaletteEvent, PaletteState> {
   PaletteBloc() : super(const PaletteInitial(primaryColor: Colors.white, secondaryColor: Colors.black)) {
     on<PaletteEvent>((PaletteEvent event, Emitter<PaletteState> emit) {
-      emit(PaletteUpdate(primaryColor: state.primaryColor, secondaryColor: state.secondaryColor));
+      emit(PaletteUpdate(primaryColor: event.primaryColor, secondaryColor: event.secondaryColor));
     });
   }
 }
