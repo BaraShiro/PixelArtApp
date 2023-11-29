@@ -7,7 +7,7 @@ sealed class PaletteState extends Equatable {
   const PaletteState({required this.primaryColor, required this.secondaryColor});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [primaryColor, secondaryColor];
 }
 
 class PaletteInitial extends PaletteState {
