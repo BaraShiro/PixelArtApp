@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pixelart/art_edit/art_edit.dart';
 import 'package:pixelart/palette/palette.dart';
 
 class PaletteView extends StatelessWidget {
@@ -12,47 +13,50 @@ class PaletteView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            // Primary color
-            Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                color: primaryColor,
-                border: Border.all(color: Colors.black),
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+          ),
+          child: Row(
+            children: [
+              // Primary color
+              Container(
+                width: 32,
+                height: 32,
+                decoration: const CheckeredBackground(repetitions: 2),
+                foregroundDecoration: BoxDecoration(
+                  color: primaryColor,
+                ),
               ),
-            ),
 
-            // Secondary color
-            Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                color: secondaryColor,
-                border: Border.all(color: Colors.black),
+              // Secondary color
+              Container(
+                width: 32,
+                height: 32,
+                decoration: const CheckeredBackground(repetitions: 2),
+                foregroundDecoration: BoxDecoration(
+                  color: secondaryColor,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         const SizedBox(width: 16, height: 16),
         const Text("NES palette"),
-        Row(
-          children: [
-            paletteButton(context, Color.fromARGB(255, 0, 64, 78)),
-            paletteButton(context, Color.fromARGB(255, 0, 124, 142)),
-            paletteButton(context, Color.fromARGB(255, 72, 206, 223)),
-            paletteButton(context, Color.fromARGB(255, 181, 236, 243)),
-          ],
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+          ),
+          child: Column(
+            children: [
+              for (List<Color> colors in nesPalette)
+                Row(children: [
+                  for (Color color in colors) paletteButton(context, color)
+                ]),
+            ],
+          ),
         ),
-        Row(
-          children: [
-            paletteButton(context, Color.fromARGB(255, 0, 79, 8)),
-            paletteButton(context, Color.fromARGB(255, 0, 144, 50)),
-            paletteButton(context, Color.fromARGB(255, 69, 225, 130)),
-            paletteButton(context, Color.fromARGB(255, 180, 243, 205)),
-          ],
-        )
+
       ],
     );
   }
@@ -78,7 +82,11 @@ class PaletteView extends StatelessWidget {
       child: Container(
         width: 16,
         height: 16,
-        color: color,
+        // color: color,
+        foregroundDecoration: BoxDecoration(
+          color: color,
+        ),
+        decoration: const CheckeredBackground(repetitions: 1),
       ),
     );
   }
