@@ -53,14 +53,6 @@ Participant constructNewUser({required String userName}) {
   return Participant(id: const Uuid().v4(), name: userName);
 }
 
-const Pixel _background = Pixel(
-  red: 255,
-  green: 255,
-  blue: 255,
-  alpha: 0,
-  placedBy: anon,
-);
-
 PixelArt constructNewPixelArt(
     {required Participant creator,
     required String name,
@@ -73,6 +65,14 @@ PixelArt constructNewPixelArt(
           ? 128
           : dimension;
 
+  Pixel background = Pixel(
+    red: 255,
+    green: 255,
+    blue: 255,
+    alpha: 0,
+    placedBy: creator,
+  );
+
   return PixelArt(
       id: const Uuid().v4(),
       name: name,
@@ -81,5 +81,7 @@ PixelArt constructNewPixelArt(
       height: validateDimension(height),
       editors: [creator],
       pixelMatrix: List<List<Pixel>>.filled(
-          height, List<Pixel>.filled(width, _background)));
+          height, List<Pixel>.filled(width, background),
+      ),
+  );
 }
