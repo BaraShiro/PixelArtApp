@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +25,7 @@ class ArtEditView extends StatelessWidget {
             border: Border.all(color: Colors.black),
           ),
           child: Container(
-            decoration: CheckeredBackground(), // Background visible through transparent pixels
+            decoration: CheckeredBackground(repetitions: max(art.width, art.height)), // Background visible through transparent pixels
             child: pixelArtMatrix(context, art.pixelMatrix)),
         ),
         const SizedBox(width: 32, height: 32),
