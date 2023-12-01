@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:pixelart/art_listing/art_listing.dart';
+import 'package:pixelart/art_listing/view/add_art_modal.dart';
 import 'package:pixelart_shared/pixelart_shared.dart';
 
 class ArtListingView extends StatelessWidget {
@@ -62,17 +63,23 @@ class ArtListingView extends StatelessWidget {
 
   Widget addButton(BuildContext context) {
     return ElevatedButton.icon(
-      onPressed: () => context.read<ArtListingBloc>().add(
-          AddArtEvent(
-              newArt: constructNewPixelArt(
-                  creator: user,
-                  name: "Test",
-                  description: "Some test art",
-                  width: 32,
-                  height: 32
-              ),
-              user: user)
-      ),
+      onPressed: () async {
+        ArtListingBloc bloc = context.read<ArtListingBloc>();
+        PixelArt? newArt = await showModalBottomSheet<PixelArt>(
+          enableDrag: false,
+          context: context,
+          builder: (BuildContext context) {
+            return Container(
+              padding: EdgeInsets.all(32),
+              child: AddArtModal(user: user),
+            );
+          },
+        );
+        // print(newArt);
+        if(newArt != null) {
+          bloc.add(AddArtEvent(newArt: newArt, user: user));
+        }
+      },
       icon: const Icon(Symbols.add),
       label: const Text("Add new empty art"),
     );
