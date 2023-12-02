@@ -46,6 +46,23 @@ class ArtEditPage extends StatelessWidget {
           child: ListView(
             padding: const EdgeInsets.all(32),
             children: [
+              // Info pane
+              BlocBuilder<ArtEditBloc, ArtEditState>(
+                buildWhen: (previous, current) => previous != current,
+                builder: (context, ArtEditState state) {
+                  switch (state) {
+                    case ArtEditInitial():
+                      return const LoadingPage();
+                    case ArtEditUpdate():
+                      return InfoView(art: state.art, user: user);
+                    case ArtEditFailure():
+                      return Text("Error: ${state.error}");
+                  }
+                },
+              ),
+
+              SizedBox(height: 32),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +81,7 @@ class ArtEditPage extends StatelessWidget {
 
                   const SizedBox(width: 32, height: 32),
 
-                  //Edit area
+                  // Edit area
                   BlocBuilder<ArtEditBloc, ArtEditState>(
                     buildWhen: (previous, current) => previous != current,
                     builder: (context, ArtEditState state) {
@@ -79,7 +96,7 @@ class ArtEditPage extends StatelessWidget {
                     },
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),
