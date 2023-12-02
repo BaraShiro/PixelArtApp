@@ -20,13 +20,26 @@ class ArtEditView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          // constraints: BoxConstraints(maxWidth: 600),
           decoration: BoxDecoration(
             border: Border.all(color: Colors.black),
           ),
           child: Container(
+            // width and height is needed for GridView
+            // width: art.width * 16,
+            // height: art.height * 16,
             decoration: CheckeredBackground(repetitions: max(art.width, art.height)), // Background visible through transparent pixels
-            child: pixelArtMatrix(context, art.pixelMatrix)),
+            child: pixelArtMatrix(context, art.pixelMatrix),
+            // Looks better on Windows, but is slower to build
+            // child: GridView.count(
+            //   shrinkWrap: true,
+            //   crossAxisCount: art.width,
+            //   children: art.pixelMatrix.expandIndexed(
+            //         (y, row) => row.mapIndexed(
+            //                 (x, pixel) => pixelArtMatrixCell(context, x, y, pixel),
+            //         ),
+            //   ).toList(),
+            // ),
+          ),
         ),
         const SizedBox(width: 32, height: 32),
         Column(
