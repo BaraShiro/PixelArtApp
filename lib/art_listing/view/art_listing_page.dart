@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:material_symbols_icons/symbols.dart';
 import 'package:pixelart/art_listing/art_listing.dart';
 import 'package:pixelart/loading/loading.dart';
-import 'package:pixelart_shared/pixelart_shared.dart';
 
 class ArtListingPage extends StatelessWidget {
   const ArtListingPage({super.key});
@@ -12,24 +10,11 @@ class ArtListingPage extends StatelessWidget {
     return MaterialPageRoute<void>(builder: (_) => const ArtListingPage());
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Pixel Art"),
-        // actions: <Widget>[
-        //   TextButton.icon(
-        //     onPressed: () => context.read<ArtListingBloc>().add(AddArtEvent(newArt: ArtGen.mario)),
-        //     icon: const Icon(Symbols.add),
-        //     label: const Text("Add"),
-        //     style: TextButton.styleFrom(
-        //         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        //         foregroundColor:
-        //         Theme.of(context).colorScheme.onPrimaryContainer),
-        //   ),
-        // ],
       ),
       body: Center(
         child: BlocProvider(

@@ -18,8 +18,8 @@ class ArtListingView extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: ListView(
+          padding: const EdgeInsets.only(left: 64, top: 32, right: 64, bottom: 32),
           children: [
-            const SizedBox(height: 32),
             header(context),
             switch (pixelArtList.isEmpty) {
               true => const Center(
