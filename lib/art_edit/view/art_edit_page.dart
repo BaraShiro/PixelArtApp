@@ -11,7 +11,23 @@ class ArtEditPage extends StatelessWidget {
   const ArtEditPage({super.key, required this.artId, required this.user});
 
   static Route<void> route({required String artId, required Participant user}) {
-    return MaterialPageRoute<void>(builder: (_) => ArtEditPage(artId: artId, user: user));
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          ArtEditPage(artId: artId, user: user),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        Offset begin = const Offset(1.0, 0.0);
+        Offset end = Offset.zero;
+        Cubic curve = Curves.ease;
+
+        Animatable<Offset> tween = Tween(begin: begin, end: end)
+            .chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
   }
 
   @override
