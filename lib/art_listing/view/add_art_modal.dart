@@ -133,8 +133,6 @@ class _AddArtModalState extends State<AddArtModal> {
           ],
         ),
       ),
-
     );
   }
-
 }

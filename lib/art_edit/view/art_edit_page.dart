@@ -61,7 +61,7 @@ class ArtEditPage extends StatelessWidget {
                 },
               ),
 
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

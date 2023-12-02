@@ -66,12 +66,10 @@ class ArtEditView extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Color color = BlocProvider.of<PaletteBloc>(context).state.primaryColor;
-        print("x: $x y: $y ${pixel.toColor()} $color");
         paintPixel(context, x, y, pixel, color);
       },
       onSecondaryTap: () {
         Color color = BlocProvider.of<PaletteBloc>(context).state.secondaryColor;
-        print("x: $x y: $y ${pixel.toColor()} $color");
         paintPixel(context, x, y, pixel, color);
       },
       child: Container(
@@ -84,7 +82,6 @@ class ArtEditView extends StatelessWidget {
 
   void paintPixel(BuildContext context, int x, int y, Pixel pixel, Color color) {
     if(pixel.toColor() == color) {
-      print("Same same!");
       return;
     }
 
@@ -92,7 +89,6 @@ class ArtEditView extends StatelessWidget {
     PixelArt newArt = art.placePixel(x, y, newPixel);
 
     if(!newArt.editors.contains(user)) {
-      print("New editor!");
       List<Participant> newEditors = List.of(newArt.editors);
       newEditors.add(user);
       newArt = newArt.copyWith(editors: newEditors);

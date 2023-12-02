@@ -41,6 +41,4 @@ class ArtListingPage extends StatelessWidget {
       ),
     );
   }
-
-
 }

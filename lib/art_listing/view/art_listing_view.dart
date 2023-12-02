@@ -70,7 +70,7 @@ class ArtListingView extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return Container(
-              padding: EdgeInsets.all(32),
+              padding: const EdgeInsets.all(32),
               child: AddArtModal(user: user),
             );
           },
@@ -142,14 +142,11 @@ class ArtListingView extends StatelessWidget {
               ],
             )),
           );
-          print(user.name);
           if(textEditingController.text == anon.name) {
-            print("Anonymous");
             context.read<ArtListingBloc>().add(UpdateUserEvent(artList: pixelArtList, user: anon));
           }
           else {
             Participant newUser = constructNewUser(userName: textEditingController.text);
-            print(newUser.name);
             context.read<ArtListingBloc>().add(UpdateUserEvent(artList: pixelArtList, user: newUser));
           }
         }

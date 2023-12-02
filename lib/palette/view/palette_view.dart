@@ -56,7 +56,6 @@ class PaletteView extends StatelessWidget {
             ],
           ),
         ),
-
       ],
     );
   }

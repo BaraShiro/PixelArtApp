@@ -13,7 +13,8 @@ Future<Image> pixelArtToImage({required PixelArt pixelArt}) async {
       green: 0,
       blue: 255,
       alpha: 255,
-      placedBy: Participant(id: "debug", name: "debug"));
+      placedBy: Participant(id: "debug", name: "debug")
+  );
 
   for (int y = 0; y < pixelArt.height; y++) {
     for (var x = 0; x < pixelArt.width; x++) {

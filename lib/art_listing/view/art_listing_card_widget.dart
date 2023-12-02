@@ -23,14 +23,16 @@ class ArtListingCardWidget extends StatelessWidget {
           children: [
             TextButton.icon(
               onPressed: () => Navigator.push(context, ArtEditPage.route(artId: pixelArt.id, user: user))
-                  .whenComplete(() => BlocProvider.of<ArtListingBloc>(context).add(ListAllArtEvent(user: user))),
+                  .whenComplete(() => BlocProvider.of<ArtListingBloc>(context)
+                  .add(ListAllArtEvent(user: user))),
               label: const Text("Edit"),
               icon: const Icon(Symbols.palette),
             ),
 
             const SizedBox(width: 16,),
 
-            SizedBox( // For that retro pixel art look
+            // For that retro pixel art look
+            SizedBox(
               width: pixelArt.width * 2,
               height: pixelArt.height * 2,
               child: FittedBox(
@@ -67,24 +69,6 @@ class ArtListingCardWidget extends StatelessWidget {
 
         ),
       ),
-      // child: ListTile(
-      //   isThreeLine: true,
-      //   titleAlignment: ListTileTitleAlignment.center,
-      //   leading: SizedBox(
-      //     height: double.maxFinite,
-      //     child: FittedBox(
-      //         child: PixelArtIcon(pixelArt: pixelArt),
-      //     ),
-      //   ),
-      //   title: Text(pixelArt.name),
-      //   subtitle: Text(pixelArt.description),
-      //   trailing: TextButton.icon(
-      //     onPressed: () => Navigator.push(context, ArtEditPage.route(artId: pixelArt.id, user: user))
-      //         .whenComplete(() => BlocProvider.of<ArtListingBloc>(context).add(ListAllArtEvent(user: user))),
-      //     label: const Text("Edit"),
-      //     icon: const Icon(Symbols.palette),
-      //   ),
-      // ),
     );
   }
 }
